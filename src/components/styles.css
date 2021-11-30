@@ -6,6 +6,8 @@ main {
   margin: 16px;
 }
 
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;800&family=Urbanist:wght@400;500;600&display=swap");
+
 .navbar {
   display: flex;
   align-items: center;
@@ -136,12 +138,16 @@ main {
 div {
   text-align: center;
 }
+h1 {
+  font-weight: 700;
+}
 h1,
 h2,
 h3,
 h4,
 h5,
 h6,
-button {
+button,
+.wrapper {
   font-family: Manrope;
 }
