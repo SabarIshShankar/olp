@@ -3,7 +3,7 @@ export const vertex = `
   attribute vec4 random;
   uniform float uTime;
   uniform sampler2D tPosition;
-  uniform sampler2d tVelocity;
+  uniform sampler2D tVelocity;
   varying vec4 vRandom;
   varying vec4 vVelocity;
   void main(){
@@ -39,9 +39,8 @@ export const positionFragment = `
     vec4 position = texture2D(tMap, vUv);
     vec4 velocity = texture2D(tVelocity, vUv);
     position.xy += velocity.xy * 0.01;
-
-    vec2 limites = vec2(1);
-    position.xy += (1.0 -step(-limits.xy, position.xy)) * limits.xy * 2.0;
+    vec2 limits = vec2(1);
+    position.xy += (1.0 - step(-limits.xy, position.xy)) * limits.xy * 2.0
     position.xy -= step(limits.xy, position.xy) * limits.xy * 2.0;
     gl_FragColor = position;
   }
@@ -51,14 +50,14 @@ export const velocityFragment = `
   precision highp float;
   uniform float uTime;
   uniform sampler2D tPosition;
-  uniform sampler2d tMap;
+  uniform sampler2D tMap;
   uniform vec2 uMouse;
   varying vec2 vUv;
   void main(){
     vec4 position = texture2D(tPosition, vUv);
     vec4 velocity = texture2D(tMap, vUv);
-    vec3 toMouse = position.xy - uMouse;
-    float stregnth = smoothstep(0.3, 0.0, length(toMouse));
+    vec2 toMouse = position.xy - uMouse;
+    float strength = smoothstep(0.3, 0.0, length(toMouse));
     velocity.xy += strength * normalize(toMouse) * 0.5;
     velocity.xy *= 0.98;
     gl_FragColor = velocity;
