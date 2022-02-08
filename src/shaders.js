@@ -28,3 +28,39 @@ export const fragment = `
     gl_FragColor.a = 1.0;
   }
 `;
+
+export const positionFragment = `
+  precision highp float;
+  uniform float uTime;
+  uniform sampler2D tVelocity;
+  uniform sampler2D tMap;
+  varying vec2 vUv;
+  void main(){
+    vec4 position = texture2D(tMap, vUv);
+    vec4 velocity = texture2D(tVelocity, vUv);
+    position.xy += velocity.xy * 0.01;
+
+    vec2 limites = vec2(1);
+    position.xy += (1.0 -step(-limits.xy, position.xy)) * limits.xy * 2.0;
+    position.xy -= step(limits.xy, position.xy) * limits.xy * 2.0;
+    gl_FragColor = position;
+  }
+`;
+
+export const velocityFragment = `
+  precision highp float;
+  uniform float uTime;
+  uniform sampler2D tPosition;
+  uniform sampler2d tMap;
+  uniform vec2 uMouse;
+  varying vec2 vUv;
+  void main(){
+    vec4 position = texture2D(tPosition, vUv);
+    vec4 velocity = texture2D(tMap, vUv);
+    vec3 toMouse = position.xy - uMouse;
+    float stregnth = smoothstep(0.3, 0.0, length(toMouse));
+    velocity.xy += strength * normalize(toMouse) * 0.5;
+    velocity.xy *= 0.98;
+    gl_FragColor = velocity;
+  }
+`;
