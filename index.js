@@ -43,7 +43,7 @@ var imgData = renderer.domElement.toDataURL();
 var img = new Image();
 img.src = imgData;
 
-const geometry = new CylinderBufferGeometry(0.1, 0.1, 1, 30);
+const geometry = new CylinderBufferGeometry(1, 1, 0.1, 30);
 const material = new MeshPhongMaterial({ vertexColors: true });
 const mesh = new InstancedMesh(geometry, material, count);
 scene.add(mesh);
